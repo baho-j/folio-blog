@@ -1,17 +1,19 @@
-# folio
+# Folio
 
-Offline blogging client
+Folio is an offline blogging client built with Google Flutter for Android and iOS. Each post holds a title, a date of entry, a main body of text and an image, and every post is stored on the device, so the application works in full without a network connection.
 
-## Getting Started
+## Building
 
-This project is a starting point for a Flutter application.
+The project rebuilds on a standard Android Studio installation with the Flutter plugin.
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+flutter run
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Documentation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Document | Contents |
+|---|---|
+| `ARCHITECTURE.md` | Structure, layers, storage and screen flow |
+| `docs/SPECIFICATION.md` | Functional and non-functional requirements, each with its acceptance check |
