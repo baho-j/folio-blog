@@ -1,0 +1,80 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:folio/data/post_repository.dart';
+import 'package:folio/models/post.dart';
+
+/// Builds an unsaved post for the contract tests.
+Post contractPost(String title, {DateTime? entryDate, String body = 'Body text'}) {
+  final moment = DateTime(2026, 10, 27, 12);
+  return Post(
+    title: title,
+    body: body,
+    entryDate: entryDate ?? DateTime(2026, 10, 27),
+    createdAt: moment,
+    updatedAt: moment,
+  );
+}
+
+/// Defines the behaviour every [PostRepository] must show, run against [create].
+void repositoryContract(Future<PostRepository> Function() create) {
+  late PostRepository repository;
+
+  setUp(() async => repository = await create());
+
+  test('save assigns an id and stores every field', () async {
+    final saved = await repository.save(contractPost('First', body: 'Exact text'));
+    expect(saved.id, isNotNull);
+    final found = await repository.find(saved.id!);
+    expect(found!.title, 'First');
+    expect(found.body, 'Exact text');
+    expect(found.entryDate, DateTime(2026, 10, 27));
+  });
+
+  test('save updates an existing post without adding another', () async {
+    final saved = await repository.save(contractPost('Before'));
+    await repository.save(saved.copyWith(title: 'After'));
+    final posts = await repository.all();
+    expect(posts.single.title, 'After');
+  });
+
+  test('save keeps the creation time and moves the update time', () async {
+    final saved = await repository.save(contractPost('Post'));
+    await Future<void>.delayed(const Duration(milliseconds: 2));
+    final updated = await repository.save(saved.copyWith(title: 'Changed'));
+    expect(updated.createdAt, saved.createdAt);
+    expect(updated.updatedAt.isAfter(saved.updatedAt), isTrue);
+  });
+
+  test('all returns the newest date of entry first', () async {
+    await repository.save(contractPost('Old', entryDate: DateTime(2026, 1, 1)));
+    await repository.save(contractPost('New', entryDate: DateTime(2026, 10, 1)));
+    await repository.save(contractPost('Middle', entryDate: DateTime(2026, 5, 1)));
+    final titles = (await repository.all()).map((post) => post.title);
+    expect(titles, ['New', 'Middle', 'Old']);
+  });
+
+  test('all places the later post first on the same date', () async {
+    await repository.save(contractPost('Earlier'));
+    await repository.save(contractPost('Later'));
+    final titles = (await repository.all()).map((post) => post.title);
+    expect(titles, ['Later', 'Earlier']);
+  });
+
+  test('find returns null for an unknown id', () async {
+    expect(await repository.find(999), isNull);
+  });
+
+  test('deleteMany removes exactly the given posts', () async {
+    final first = await repository.save(contractPost('First'));
+    final second = await repository.save(contractPost('Second'));
+    final third = await repository.save(contractPost('Third'));
+    await repository.deleteMany({first.id!, third.id!});
+    final posts = await repository.all();
+    expect(posts.single.id, second.id);
+  });
+
+  test('deleteMany accepts an empty set', () async {
+    await repository.save(contractPost('Kept'));
+    await repository.deleteMany({});
+    expect(await repository.all(), hasLength(1));
+  });
+}
