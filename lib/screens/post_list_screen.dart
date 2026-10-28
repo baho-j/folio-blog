@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../state/post_store.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/post_tile.dart';
+import 'post_detail_screen.dart';
 
 /// Home screen, which lists every post, newest first.
 class PostListScreen extends StatefulWidget {
@@ -66,7 +67,18 @@ class _PostListScreenState extends State<PostListScreen> {
     return ListView.separated(
       itemCount: posts.length,
       separatorBuilder: (_, _) => const Divider(),
-      itemBuilder: (context, index) => PostTile(post: posts[index]),
+      itemBuilder: (context, index) {
+        final post = posts[index];
+        return PostTile(post: post, onTap: () => _open(post.id!));
+      },
+    );
+  }
+
+  void _open(int id) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => PostDetailScreen(store: _store, postId: id),
+      ),
     );
   }
 }
