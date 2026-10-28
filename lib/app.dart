@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'screens/post_list_screen.dart';
+import 'state/post_store.dart';
 import 'theme/app_theme.dart';
 
 /// Root widget, which applies the themes and follows the device brightness.
 class FolioApp extends StatelessWidget {
   /// Creates the application.
-  const FolioApp({super.key});
+  const FolioApp({super.key, required this.store});
+
+  /// Shared state of the application.
+  final PostStore store;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +20,7 @@ class FolioApp extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Folio')),
-        body: const Center(child: Text('Your posts will appear here.')),
-      ),
+      home: PostListScreen(store: store),
     );
   }
 }

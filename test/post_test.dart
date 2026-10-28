@@ -74,6 +74,10 @@ void main() {
     });
   });
 
+  test('excerpt collapses line breaks and repeated spaces', () {
+    expect(post.copyWith(body: ' One\n\ntwo   three ').excerpt, 'One two three');
+  });
+
   test('dateOnly removes the time', () {
     expect(Post.dateOnly(moment), DateTime(2026, 10, 27));
   });

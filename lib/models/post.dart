@@ -53,6 +53,9 @@ class Post {
   /// Moment the post was last changed.
   final DateTime updatedAt;
 
+  /// The body as one line, for the list.
+  String get excerpt => body.replaceAll(RegExp(r'\s+'), ' ').trim();
+
   /// A null [imageName] keeps the current image, so [clearImage] removes it.
   Post copyWith({
     int? id,

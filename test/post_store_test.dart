@@ -44,7 +44,7 @@ void main() {
       expect(store.posts.single.title, 'Stored');
     });
 
-    test('reports a failure and can be retried', () async {
+    test('reports a failure', () async {
       final failing = PostStore(_FailingRepository());
       await failing.load();
       expect(failing.loadFailed, isTrue);
