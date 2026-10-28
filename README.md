@@ -17,3 +17,4 @@ flutter run
 |---|---|
 | `ARCHITECTURE.md` | Structure, layers, storage and screen flow |
 | `docs/SPECIFICATION.md` | Functional and non-functional requirements, each with its acceptance check |
+| `docs/DESIGN.md` | UML class and sequence diagrams, flow charts and the database schema |

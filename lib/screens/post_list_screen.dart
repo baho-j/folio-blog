@@ -4,6 +4,7 @@ import '../state/post_store.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/post_tile.dart';
 import 'post_detail_screen.dart';
+import 'post_editor_screen.dart';
 
 /// Home screen, which lists every post, newest first.
 class PostListScreen extends StatefulWidget {
@@ -34,6 +35,13 @@ class _PostListScreenState extends State<PostListScreen> {
         return Scaffold(
           appBar: AppBar(title: const Text('Folio')),
           body: _buildBody(),
+          floatingActionButton: _store.posts.isEmpty
+              ? null
+              : FloatingActionButton.extended(
+                  onPressed: _write,
+                  icon: const Icon(Icons.edit_outlined),
+                  label: const Text('New post'),
+                ),
         );
       },
     );
@@ -57,10 +65,12 @@ class _PostListScreenState extends State<PostListScreen> {
       );
     }
     if (_store.posts.isEmpty) {
-      return const EmptyState(
+      return EmptyState(
         icon: Icons.edit_note,
         title: 'Nothing here yet',
         message: 'Posts you write are kept on this device.',
+        actionLabel: 'Write your first post',
+        onAction: _write,
       );
     }
     final posts = _store.posts;
@@ -72,6 +82,11 @@ class _PostListScreenState extends State<PostListScreen> {
         return PostTile(post: post, onTap: () => _open(post.id!));
       },
     );
+  }
+
+  void _write() {
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (_) => PostEditorScreen(store: _store)));
   }
 
   void _open(int id) {

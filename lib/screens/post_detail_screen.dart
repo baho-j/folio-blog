@@ -6,6 +6,7 @@ import '../theme/app_theme.dart';
 import '../util/date_text.dart';
 import '../widgets/confirm_delete_dialog.dart';
 import '../widgets/empty_state.dart';
+import 'post_editor_screen.dart';
 
 /// Shows one post in full.
 class PostDetailScreen extends StatefulWidget {
@@ -25,6 +26,14 @@ class PostDetailScreen extends StatefulWidget {
 class _PostDetailScreenState extends State<PostDetailScreen> {
   // Keeps the screen filled while it closes after a deletion.
   Post? _lastSeen;
+
+  void _edit(Post post) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => PostEditorScreen(store: widget.store, post: post),
+      ),
+    );
+  }
 
   Future<void> _delete() async {
     if (!await confirmDelete(context, count: 1) || !mounted) return;
@@ -49,12 +58,18 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
         return Scaffold(
           appBar: AppBar(
             actions: [
-              if (post != null)
+              if (post != null) ...[
+                IconButton(
+                  tooltip: 'Edit',
+                  icon: const Icon(Icons.edit_outlined),
+                  onPressed: () => _edit(post),
+                ),
                 IconButton(
                   tooltip: 'Delete',
                   icon: const Icon(Icons.delete_outline),
                   onPressed: _delete,
                 ),
+              ],
             ],
           ),
           body: post == null
