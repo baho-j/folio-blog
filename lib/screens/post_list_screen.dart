@@ -24,7 +24,16 @@ class _PostListScreenState extends State<PostListScreen> {
   @override
   void initState() {
     super.initState();
-    _store.load();
+    _start();
+  }
+
+  Future<void> _start() async {
+    await _store.load();
+    final photo = await _store.recoverLostPhoto();
+    if (photo == null || !mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Your last photo was recovered')));
+    _write(recoveredImagePath: photo);
   }
 
   @override
@@ -84,9 +93,12 @@ class _PostListScreenState extends State<PostListScreen> {
     );
   }
 
-  void _write() {
-    Navigator.of(context)
-        .push(MaterialPageRoute<void>(builder: (_) => PostEditorScreen(store: _store)));
+  void _write({String? recoveredImagePath}) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => PostEditorScreen(store: _store, initialImagePath: recoveredImagePath),
+      ),
+    );
   }
 
   void _open(int id) {

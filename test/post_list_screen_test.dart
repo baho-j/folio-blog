@@ -44,6 +44,19 @@ void main() {
     expect(find.text('Nothing here yet'), findsOneWidget);
   });
 
+  testWidgets('opens the editor with a photo recovered at start', (tester) async {
+    final photos = FakePhotoPicker()..lostPath = 'lost.jpg';
+    await pumpApp(tester, photos: photos);
+    expect(find.text('New post'), findsOneWidget);
+    expect(find.text('Add a photo'), findsNothing);
+    expect(find.text('Your last photo was recovered'), findsOneWidget);
+  });
+
+  testWidgets('stays on the list when no photo was lost', (tester) async {
+    await pumpApp(tester);
+    expect(find.text('New post'), findsNothing);
+  });
+
   testWidgets('shows the title, date and excerpt of each post', (tester) async {
     await pumpApp(
       tester,

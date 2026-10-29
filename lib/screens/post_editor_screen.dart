@@ -12,13 +12,16 @@ import '../widgets/post_image.dart';
 /// Creates a new post, or edits [post] when one is given.
 class PostEditorScreen extends StatefulWidget {
   /// Creates an editor for [post], or for a new post when it is null.
-  const PostEditorScreen({super.key, required this.store, this.post});
+  const PostEditorScreen({super.key, required this.store, this.post, this.initialImagePath});
 
   /// Shared state of the application.
   final PostStore store;
 
   /// The post being edited, or null for a new one.
   final Post? post;
+
+  /// A photo to start from, used when one is recovered after the application was ended.
+  final String? initialImagePath;
 
   @override
   State<PostEditorScreen> createState() => _PostEditorScreenState();
@@ -30,7 +33,7 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
   late final _title = TextEditingController(text: _original.title);
   late final _body = TextEditingController(text: _original.body);
   late DateTime _entryDate = _original.entryDate;
-  String? _pickedImagePath;
+  late String? _pickedImagePath = widget.initialImagePath;
   bool _imageRemoved = false;
   bool _saving = false;
 

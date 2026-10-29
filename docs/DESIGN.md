@@ -40,6 +40,7 @@ classDiagram
 
     class PhotoPicker {
         +pick(bool fromCamera) String?
+        +recoverLost() String?
     }
 
     class BlogDatabase {
@@ -71,6 +72,7 @@ classDiagram
         +search(String text) List~Post~
         +imageOf(Post post) File?
         +pickPhoto(bool fromCamera) String?
+        +recoverLostPhoto() String?
     }
 
     PostRepository <|.. SqlitePostRepository
@@ -218,7 +220,7 @@ flowchart TD
     G --> H{User saves?}
     H -->|Yes| I[Copy into app images folder and save post]
     H -->|No, discards| J[Leave stored post unchanged]
-    C -.->|Android ended the app while camera was open| K[On return, retrieve lost photo and restore draft]
+    C -.->|Android ended the app while camera was open| K[At next start, retrieve the lost photo and open a new draft]
     K --> G
 ```
 

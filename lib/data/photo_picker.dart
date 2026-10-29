@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 // Third-party: image_picker (BSD-3-Clause), opens the camera and the photo gallery
 import 'package:image_picker/image_picker.dart';
 
@@ -17,5 +19,12 @@ class PhotoPicker {
       imageQuality: _quality,
     );
     return file?.path;
+  }
+
+  /// Returns a photo taken just before Android ended the application, if there is one.
+  Future<String?> recoverLost() async {
+    if (defaultTargetPlatform != TargetPlatform.android) return null;
+    final response = await _picker.retrieveLostData();
+    return response.file?.path;
   }
 }

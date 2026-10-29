@@ -8,6 +8,9 @@ class FakePhotoPicker implements PhotoPicker {
   /// Set to make the next pick fail, as a refused permission does.
   bool failing = false;
 
+  /// The photo recovered at the next start, as after Android ended the application.
+  String? lostPath;
+
   /// Whether the last pick asked for the camera.
   bool? usedCamera;
 
@@ -17,4 +20,7 @@ class FakePhotoPicker implements PhotoPicker {
     if (failing) throw Exception('camera unavailable');
     return nextPath;
   }
+
+  @override
+  Future<String?> recoverLost() async => lostPath;
 }

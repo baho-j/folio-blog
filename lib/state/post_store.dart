@@ -65,6 +65,9 @@ class PostStore extends ChangeNotifier {
   /// Asks the user for a photo from the camera or the gallery.
   Future<String?> pickPhoto({required bool fromCamera}) => _photos.pick(fromCamera: fromCamera);
 
+  /// Returns a photo lost when Android ended the application, if there is one.
+  Future<String?> recoverLostPhoto() => _photos.recoverLost();
+
   /// Saves [post] and refreshes the list.
   Future<Post> save(Post post, {String? pickedImagePath}) async {
     final saved = await _repository.save(post, pickedImagePath: pickedImagePath);

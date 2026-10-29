@@ -124,7 +124,7 @@ The `image_name` column holds only the name of the image file, never its full pa
 
 When the user takes a photo or chooses one from the gallery, `image_picker` returns a temporary file that the operating system may remove at any time. `ImageStore` therefore copies it into the `images/` folder under a generated name the moment the post is saved, before the database row is written, and the post records that name. Holding the temporary path until then means that a draft the user abandons leaves no file behind. When an image is replaced, the previous file is deleted after the new one has been saved, and when a post is deleted, alone or as part of a group, its image file is deleted in the same operation, so the device does not accumulate unused photos. Images are limited to 1600 pixels on the longer edge at a quality of 85, which keeps a typical photo under one megabyte while remaining sharp on a phone screen.
 
-On Android, the system may close the application while the camera is open if the device is short of memory, and in that case the captured photo can only be recovered through `retrieveLostData`. The editor checks for lost data when it opens and restores the image to the draft, and the handling of this case is recorded in `docs/DECISIONS.md`.
+On Android, the system may close the application while the camera is open if the device is short of memory, and in that case the captured photo can only be recovered through `retrieveLostData`. The post list checks for lost data each time the application starts and, when a photo is found, opens a new draft holding it, and the handling of this case is recorded in `docs/DECISIONS.md`.
 
 ## 5. Dependencies
 
