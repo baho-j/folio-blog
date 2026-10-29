@@ -32,13 +32,17 @@ class SqlitePostRepository implements PostRepository {
 
   @override
   Future<Post> save(Post post, {String? pickedImagePath}) async {
+    final previous = post.id == null ? null : (await find(post.id!))?.imageName;
     final newImage = pickedImagePath == null ? null : await _images.import(pickedImagePath);
+    final Post saved;
     try {
-      return await _write(post.copyWith(imageName: newImage));
+      saved = await _write(post.copyWith(imageName: newImage));
     } on Exception {
       if (newImage != null) await _images.delete(newImage);
       rethrow;
     }
+    if (previous != null && previous != saved.imageName) await _removeFile(previous);
+    return saved;
   }
 
   Future<Post> _write(Post post) {
@@ -57,9 +61,23 @@ class SqlitePostRepository implements PostRepository {
   Future<void> deleteMany(Set<int> ids) async {
     if (ids.isEmpty) return;
     final slots = List.filled(ids.length, '?').join(', ');
-    await _db.transaction(
-      (txn) => txn.delete(_table, where: 'id IN ($slots)', whereArgs: ids.toList()),
-    );
+    final where = 'id IN ($slots)';
+    final args = ids.toList();
+    final rows = await _db.query(_table, columns: ['image_name'], where: where, whereArgs: args);
+    await _db.transaction((txn) => txn.delete(_table, where: where, whereArgs: args));
+    for (final row in rows) {
+      final name = row['image_name'] as String?;
+      if (name != null) await _removeFile(name);
+    }
+  }
+
+  /// The rows are already committed, so a leftover file must not fail the operation.
+  Future<void> _removeFile(String name) async {
+    try {
+      await _images.delete(name);
+    } on FileSystemException {
+      return;
+    }
   }
 
   @override

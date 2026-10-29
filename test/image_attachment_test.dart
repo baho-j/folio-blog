@@ -103,4 +103,67 @@ void main() {
       findsOneWidget,
     );
   });
+
+  group('a post that already has a photo', () {
+    Future<PostStore> openEditor(WidgetTester tester) async {
+      final store = await pumpApp(tester, photos: photos);
+      await store.save(contractPost('With photo'), pickedImagePath: 'first.jpg');
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('With photo'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('Edit'));
+      await tester.pumpAndSettle();
+      return store;
+    }
+
+    Future<void> chooseFromPhoto(WidgetTester tester, String option) async {
+      await tester.tap(find.bySemanticsLabel('Change or remove the photo'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(option));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('the sheet offers removal', (tester) async {
+      await openEditor(tester);
+      await tester.tap(find.bySemanticsLabel('Change or remove the photo'));
+      await tester.pumpAndSettle();
+      expect(find.text('Remove photo'), findsOneWidget);
+    });
+
+    testWidgets('a new post offers no removal', (tester) async {
+      await openNewPost(tester);
+      await tester.tap(find.text('Add a photo'));
+      await tester.pumpAndSettle();
+      expect(find.text('Remove photo'), findsNothing);
+    });
+
+    testWidgets('replacing saves a different image', (tester) async {
+      final store = await openEditor(tester);
+      final before = store.posts.single.imageName;
+      await chooseFromPhoto(tester, 'Choose from gallery');
+      await tester.tap(find.text('Save'));
+      await tester.pumpAndSettle();
+      expect(store.posts.single.imageName, isNot(before));
+    });
+
+    testWidgets('removing leaves the post without an image', (tester) async {
+      final store = await openEditor(tester);
+      await chooseFromPhoto(tester, 'Remove photo');
+      expect(find.text('Add a photo'), findsOneWidget);
+      await tester.tap(find.text('Save'));
+      await tester.pumpAndSettle();
+      expect(store.posts.single.imageName, isNull);
+    });
+
+    testWidgets('removing and then discarding keeps the image', (tester) async {
+      final store = await openEditor(tester);
+      final before = store.posts.single.imageName;
+      await chooseFromPhoto(tester, 'Remove photo');
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Discard'));
+      await tester.pumpAndSettle();
+      expect(store.posts.single.imageName, before);
+    });
+  });
 }

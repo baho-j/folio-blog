@@ -108,4 +108,44 @@ void repositoryContract(Future<ContractSubject> Function() create) {
     expect(await subject.hasImage(name), isTrue);
     expect((await repository.find(saved.id!))!.imageName, name);
   });
+
+  Future<Post> savedWithPhoto() async =>
+      repository.save(contractPost('With photo'), pickedImagePath: await subject.newPhoto());
+
+  test('replacing an image deletes the previous file', () async {
+    final saved = await savedWithPhoto();
+    final replaced = await repository.save(saved, pickedImagePath: await subject.newPhoto());
+    expect(replaced.imageName, isNot(saved.imageName));
+    expect(await subject.hasImage(saved.imageName!), isFalse);
+    expect(await subject.hasImage(replaced.imageName!), isTrue);
+  });
+
+  test('removing an image deletes its file', () async {
+    final saved = await savedWithPhoto();
+    final cleared = await repository.save(saved.copyWith(clearImage: true));
+    expect(cleared.imageName, isNull);
+    expect(await subject.hasImage(saved.imageName!), isFalse);
+  });
+
+  test('editing the text keeps the image file', () async {
+    final saved = await savedWithPhoto();
+    await repository.save(saved.copyWith(title: 'Renamed'));
+    expect(await subject.hasImage(saved.imageName!), isTrue);
+  });
+
+  test('deleting a post deletes its image file', () async {
+    final saved = await savedWithPhoto();
+    await repository.deleteMany({saved.id!});
+    expect(await subject.hasImage(saved.imageName!), isFalse);
+  });
+
+  test('deleting a group deletes only the images of that group', () async {
+    final first = await savedWithPhoto();
+    final second = await savedWithPhoto();
+    final kept = await savedWithPhoto();
+    await repository.deleteMany({first.id!, second.id!});
+    expect(await subject.hasImage(first.imageName!), isFalse);
+    expect(await subject.hasImage(second.imageName!), isFalse);
+    expect(await subject.hasImage(kept.imageName!), isTrue);
+  });
 }

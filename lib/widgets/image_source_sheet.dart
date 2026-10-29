@@ -7,20 +7,26 @@ enum ImageAction {
 
   /// Choose an existing photo from the gallery.
   gallery,
+
+  /// Remove the current photo from the post.
+  remove,
 }
 
-/// Asks where a photo should come from.
-Future<ImageAction?> showImageSourceSheet(BuildContext context) {
+/// Asks where a photo should come from, and offers removal when [hasImage] is true.
+Future<ImageAction?> showImageSourceSheet(BuildContext context, {required bool hasImage}) {
   return showModalBottomSheet<ImageAction>(
     context: context,
-    builder: (_) => const ImageSourceSheet(),
+    builder: (_) => ImageSourceSheet(hasImage: hasImage),
   );
 }
 
 /// Bottom sheet listing the image actions.
 class ImageSourceSheet extends StatelessWidget {
   /// Creates the sheet.
-  const ImageSourceSheet({super.key});
+  const ImageSourceSheet({super.key, required this.hasImage});
+
+  /// Whether to offer removal of the current photo.
+  final bool hasImage;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +45,12 @@ class ImageSourceSheet extends StatelessWidget {
             title: const Text('Choose from gallery'),
             onTap: () => choose(ImageAction.gallery),
           ),
+          if (hasImage)
+            ListTile(
+              leading: const Icon(Icons.hide_image_outlined),
+              title: const Text('Remove photo'),
+              onTap: () => choose(ImageAction.remove),
+            ),
         ],
       ),
     );

@@ -25,6 +25,7 @@ class InMemoryPostRepository implements PostRepository {
 
   @override
   Future<Post> save(Post post, {String? pickedImagePath}) async {
+    final previous = post.id == null ? null : _posts[post.id!]?.imageName;
     final newImage = pickedImagePath == null ? null : 'image_${_nextImage++}.jpg';
     if (newImage != null) imageNames.add(newImage);
     final now = DateTime.now();
@@ -34,11 +35,16 @@ class InMemoryPostRepository implements PostRepository {
       createdAt: post.id == null ? now : null,
       updatedAt: now,
     );
+    if (previous != stored.imageName) imageNames.remove(previous);
     return _posts[stored.id!] = stored;
   }
 
   @override
-  Future<void> deleteMany(Set<int> ids) async => _posts.removeWhere((id, _) => ids.contains(id));
+  Future<void> deleteMany(Set<int> ids) async {
+    for (final id in ids) {
+      imageNames.remove(_posts.remove(id)?.imageName);
+    }
+  }
 
   @override
   File imageFile(String name) => File(name);

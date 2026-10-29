@@ -31,17 +31,20 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
   late final _body = TextEditingController(text: _original.body);
   late DateTime _entryDate = _original.entryDate;
   String? _pickedImagePath;
+  bool _imageRemoved = false;
   bool _saving = false;
 
   bool get _isDirty =>
       _title.text != _original.title ||
       _body.text != _original.body ||
       _entryDate != _original.entryDate ||
-      _pickedImagePath != null;
+      _pickedImagePath != null ||
+      _imageRemoved;
 
   File? get _previewImage {
     final picked = _pickedImagePath;
-    return picked != null ? File(picked) : widget.store.imageOf(_original);
+    if (picked != null) return File(picked);
+    return _imageRemoved ? null : widget.store.imageOf(_original);
   }
 
   @override
@@ -62,16 +65,32 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
   }
 
   Future<void> _chooseImage() async {
-    final action = await showImageSourceSheet(context);
-    if (action == null) return;
-    await _attach(fromCamera: action == ImageAction.camera);
+    final action = await showImageSourceSheet(context, hasImage: _previewImage != null);
+    switch (action) {
+      case ImageAction.camera:
+        await _attach(fromCamera: true);
+      case ImageAction.gallery:
+        await _attach(fromCamera: false);
+      case ImageAction.remove:
+        setState(() {
+          _pickedImagePath = null;
+          _imageRemoved = true;
+        });
+      case null:
+        break;
+    }
   }
 
   Future<void> _attach({required bool fromCamera}) async {
     final messenger = ScaffoldMessenger.of(context);
     try {
       final path = await widget.store.pickPhoto(fromCamera: fromCamera);
-      if (path != null && mounted) setState(() => _pickedImagePath = path);
+      if (path != null && mounted) {
+        setState(() {
+          _pickedImagePath = path;
+          _imageRemoved = false;
+        });
+      }
     } on Exception {
       messenger.showSnackBar(
         SnackBar(
@@ -94,6 +113,7 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
           title: _title.text.trim(),
           body: _body.text.trim(),
           entryDate: _entryDate,
+          clearImage: _imageRemoved,
         ),
         pickedImagePath: _pickedImagePath,
       );
