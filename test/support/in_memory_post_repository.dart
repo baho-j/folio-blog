@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:folio/data/post_repository.dart';
 import 'package:folio/models/post.dart';
 
@@ -5,6 +7,10 @@ import 'package:folio/models/post.dart';
 class InMemoryPostRepository implements PostRepository {
   final Map<int, Post> _posts = {};
   int _nextId = 1;
+  int _nextImage = 1;
+
+  /// Names of the image files that would exist on a device.
+  final Set<String> imageNames = {};
 
   @override
   Future<List<Post>> all() async {
@@ -18,10 +24,13 @@ class InMemoryPostRepository implements PostRepository {
   Future<Post?> find(int id) async => _posts[id];
 
   @override
-  Future<Post> save(Post post) async {
+  Future<Post> save(Post post, {String? pickedImagePath}) async {
+    final newImage = pickedImagePath == null ? null : 'image_${_nextImage++}.jpg';
+    if (newImage != null) imageNames.add(newImage);
     final now = DateTime.now();
     final stored = post.copyWith(
       id: post.id ?? _nextId++,
+      imageName: newImage,
       createdAt: post.id == null ? now : null,
       updatedAt: now,
     );
@@ -30,4 +39,7 @@ class InMemoryPostRepository implements PostRepository {
 
   @override
   Future<void> deleteMany(Set<int> ids) async => _posts.removeWhere((id, _) => ids.contains(id));
+
+  @override
+  File imageFile(String name) => File(name);
 }

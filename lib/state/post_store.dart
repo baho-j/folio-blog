@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
+import '../data/photo_picker.dart';
 import '../data/post_repository.dart';
 import '../models/post.dart';
 
 /// Shared state of the application, and the only object the screens talk to.
 class PostStore extends ChangeNotifier {
   /// Creates the store over its repository.
-  PostStore(this._repository);
+  PostStore(this._repository, this._photos);
 
   final PostRepository _repository;
+  final PhotoPicker _photos;
 
   List<Post> _posts = const [];
   final Set<int> _selected = {};
@@ -52,9 +56,18 @@ class PostStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Returns the file for the image of [post], or null if it has none.
+  File? imageOf(Post post) {
+    final name = post.imageName;
+    return name == null ? null : _repository.imageFile(name);
+  }
+
+  /// Asks the user for a photo from the camera or the gallery.
+  Future<String?> pickPhoto({required bool fromCamera}) => _photos.pick(fromCamera: fromCamera);
+
   /// Saves [post] and refreshes the list.
-  Future<Post> save(Post post) async {
-    final saved = await _repository.save(post);
+  Future<Post> save(Post post, {String? pickedImagePath}) async {
+    final saved = await _repository.save(post, pickedImagePath: pickedImagePath);
     await _refresh();
     return saved;
   }

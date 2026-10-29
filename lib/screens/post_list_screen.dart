@@ -79,7 +79,7 @@ class _PostListScreenState extends State<PostListScreen> {
       separatorBuilder: (_, _) => const Divider(),
       itemBuilder: (context, index) {
         final post = posts[index];
-        return PostTile(post: post, onTap: () => _open(post.id!));
+        return PostTile(post: post, image: _store.imageOf(post), onTap: () => _open(post.id!));
       },
     );
   }

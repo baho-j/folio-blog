@@ -24,6 +24,10 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Folio uses the camera so that you can take a photo for a post.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Folio opens your photo library so that you can attach a photo to a post.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>

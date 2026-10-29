@@ -3,6 +3,7 @@ import 'package:folio/app.dart';
 import 'package:folio/models/post.dart';
 import 'package:folio/state/post_store.dart';
 
+import 'support/fake_photo_picker.dart';
 import 'support/in_memory_post_repository.dart';
 import 'support/pump_app.dart';
 import 'support/repository_contract.dart';
@@ -24,14 +25,16 @@ void main() {
   });
 
   testWidgets('shows a loading state before the posts arrive', (tester) async {
-    await tester.pumpWidget(FolioApp(store: PostStore(InMemoryPostRepository())));
+    await tester.pumpWidget(
+      FolioApp(store: PostStore(InMemoryPostRepository(), FakePhotoPicker())),
+    );
     expect(find.text('Opening your posts'), findsOneWidget);
     await tester.pumpAndSettle();
   });
 
   testWidgets('recovers from a failed load through the retry action', (tester) async {
     final repository = _FailingRepository();
-    await tester.pumpWidget(FolioApp(store: PostStore(repository)));
+    await tester.pumpWidget(FolioApp(store: PostStore(repository, FakePhotoPicker())));
     await tester.pumpAndSettle();
     expect(find.text('Your posts could not be opened'), findsOneWidget);
 

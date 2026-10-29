@@ -1,19 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../models/post.dart';
 import '../theme/app_theme.dart';
 import '../util/date_text.dart';
+import 'post_image.dart';
 
 /// Row of the post list, with a square thumbnail, title, date and excerpt.
 class PostTile extends StatelessWidget {
   /// Creates a row for [post].
-  const PostTile({super.key, required this.post, this.onTap, this.onLongPress});
+  const PostTile({super.key, required this.post, this.image, this.onTap, this.onLongPress});
 
   /// Side of the square thumbnail.
   static const double thumbnailSize = 64;
 
   /// The post to show.
   final Post post;
+
+  /// Thumbnail file, or null when the post has no image.
+  final File? image;
 
   /// Called when the row is tapped.
   final VoidCallback? onTap;
@@ -36,7 +42,7 @@ class PostTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _Thumbnail(),
+            _Thumbnail(image: image),
             const SizedBox(width: AppSpacing.medium),
             Expanded(
               child: Column(
@@ -71,7 +77,9 @@ class PostTile extends StatelessWidget {
 }
 
 class _Thumbnail extends StatelessWidget {
-  const _Thumbnail();
+  const _Thumbnail({this.image});
+
+  final File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +88,17 @@ class _Thumbnail extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       child: SizedBox.square(
         dimension: PostTile.thumbnailSize,
-        child: ColoredBox(
-          color: scheme.surfaceContainer,
-          child: Icon(Icons.notes, color: scheme.onSurfaceVariant),
-        ),
+        child: image == null
+            ? ColoredBox(
+                color: scheme.surfaceContainer,
+                child: Icon(Icons.notes, color: scheme.onSurfaceVariant),
+              )
+            : PostImage(
+                file: image!,
+                width: PostTile.thumbnailSize,
+                height: PostTile.thumbnailSize,
+                cacheWidth: 256,
+              ),
       ),
     );
   }

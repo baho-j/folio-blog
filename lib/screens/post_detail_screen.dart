@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../models/post.dart';
@@ -6,6 +8,7 @@ import '../theme/app_theme.dart';
 import '../util/date_text.dart';
 import '../widgets/confirm_delete_dialog.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/post_image.dart';
 import 'post_editor_screen.dart';
 
 /// Shows one post in full.
@@ -78,7 +81,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   title: 'This post is no longer here',
                   message: 'It may have been deleted.',
                 )
-              : _PostBody(post: post),
+              : _PostBody(post: post, image: widget.store.imageOf(post)),
         );
       },
     );
@@ -86,24 +89,36 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
 }
 
 class _PostBody extends StatelessWidget {
-  const _PostBody({required this.post});
+  const _PostBody({required this.post, this.image});
 
   final Post post;
+  final File? image;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.large),
       children: [
-        Text(
-          longDate(post.entryDate),
-          style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+        if (image != null)
+          PostImage(file: image!, width: double.infinity, fit: BoxFit.fitWidth, label: post.title),
+        Padding(
+          padding: const EdgeInsets.all(AppSpacing.large),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                longDate(post.entryDate),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.small),
+              Text(post.title, style: theme.textTheme.headlineMedium),
+              const SizedBox(height: AppSpacing.large),
+              SelectableText(post.body, style: theme.textTheme.bodyLarge),
+            ],
+          ),
         ),
-        const SizedBox(height: AppSpacing.small),
-        Text(post.title, style: theme.textTheme.headlineMedium),
-        const SizedBox(height: AppSpacing.large),
-        SelectableText(post.body, style: theme.textTheme.bodyLarge),
       ],
     );
   }

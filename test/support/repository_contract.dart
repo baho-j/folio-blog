@@ -14,11 +14,30 @@ Post contractPost(String title, {DateTime? entryDate, String body = 'Body text'}
   );
 }
 
-/// Defines the behaviour every [PostRepository] must show, run against [create].
-void repositoryContract(Future<PostRepository> Function() create) {
+/// A repository under test, with the means to create and find its photos.
+class ContractSubject {
+  /// Creates a subject from its three parts.
+  const ContractSubject({required this.repository, required this.newPhoto, required this.hasImage});
+
+  /// The repository under test.
+  final PostRepository repository;
+
+  /// Creates a photo file and returns its path.
+  final Future<String> Function() newPhoto;
+
+  /// Whether a stored image called [name] exists.
+  final Future<bool> Function(String name) hasImage;
+}
+
+/// Defines the behaviour every [PostRepository] must show.
+void repositoryContract(Future<ContractSubject> Function() create) {
+  late ContractSubject subject;
   late PostRepository repository;
 
-  setUp(() async => repository = await create());
+  setUp(() async {
+    subject = await create();
+    repository = subject.repository;
+  });
 
   test('save assigns an id and stores every field', () async {
     final saved = await repository.save(contractPost('First', body: 'Exact text'));
@@ -76,5 +95,17 @@ void repositoryContract(Future<PostRepository> Function() create) {
     await repository.save(contractPost('Kept'));
     await repository.deleteMany({});
     expect(await repository.all(), hasLength(1));
+  });
+
+  test('save takes in a picked photo and stores only its file name', () async {
+    final saved = await repository.save(
+      contractPost('With photo'),
+      pickedImagePath: await subject.newPhoto(),
+    );
+    final name = saved.imageName!;
+    expect(name, isNot(contains('/')));
+    expect(name, isNot(contains(r'\')));
+    expect(await subject.hasImage(name), isTrue);
+    expect((await repository.find(saved.id!))!.imageName, name);
   });
 }

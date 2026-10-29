@@ -1,18 +1,22 @@
+import 'dart:io';
+
 // Third-party: sqflite (BSD-2-Clause), the standard SQLite plugin for Flutter
 import 'package:sqflite/sqflite.dart';
 
 import '../models/post.dart';
+import 'image_store.dart';
 import 'post_repository.dart';
 
-/// Stores posts in the SQLite database.
+/// Stores posts in SQLite and their images through [ImageStore].
 class SqlitePostRepository implements PostRepository {
-  /// Creates a repository over the open database [_db].
-  SqlitePostRepository(this._db);
+  /// Creates the repository over its storage.
+  SqlitePostRepository(this._db, this._images);
 
   static const String _table = 'posts';
   static const String _newestFirst = 'entry_date DESC, id DESC';
 
   final Database _db;
+  final ImageStore _images;
 
   @override
   Future<List<Post>> all() async {
@@ -27,7 +31,17 @@ class SqlitePostRepository implements PostRepository {
   }
 
   @override
-  Future<Post> save(Post post) {
+  Future<Post> save(Post post, {String? pickedImagePath}) async {
+    final newImage = pickedImagePath == null ? null : await _images.import(pickedImagePath);
+    try {
+      return await _write(post.copyWith(imageName: newImage));
+    } on Exception {
+      if (newImage != null) await _images.delete(newImage);
+      rethrow;
+    }
+  }
+
+  Future<Post> _write(Post post) {
     final now = DateTime.now();
     final stamped = post.copyWith(updatedAt: now, createdAt: post.id == null ? now : null);
     return _db.transaction((txn) async {
@@ -47,4 +61,7 @@ class SqlitePostRepository implements PostRepository {
       (txn) => txn.delete(_table, where: 'id IN ($slots)', whereArgs: ids.toList()),
     );
   }
+
+  @override
+  File imageFile(String name) => _images.fileFor(name);
 }

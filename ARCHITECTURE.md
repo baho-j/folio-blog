@@ -26,6 +26,7 @@ folio-blog/
 │   │   └── post.dart
 │   ├── data/
 │   │   ├── blog_database.dart
+│   │   ├── photo_picker.dart
 │   │   ├── post_repository.dart
 │   │   ├── sqlite_post_repository.dart
 │   │   └── image_store.dart
@@ -66,7 +67,7 @@ folio-blog/
 | `lib/main.dart` | Entry point, which opens the database and starts the application |
 | `lib/app.dart` | Root widget, theme selection and navigation routes |
 | `lib/models/` | The `Post` value class and its conversion to and from database rows |
-| `lib/data/` | All access to SQLite and to the file system, behind the `PostRepository` interface |
+| `lib/data/` | All access to SQLite, the file system and the camera and gallery, behind the `PostRepository` interface and the `PhotoPicker` class |
 | `lib/state/` | `PostStore`, which holds the list of posts, the current selection and the search results, and notifies the screens when they change |
 | `lib/screens/` | The four screens of the application |
 | `lib/widgets/` | Reusable interface components shared between screens |
@@ -88,8 +89,8 @@ flowchart TD
     Sqlite --> DB[(folio.db<br/>SQLite)]
     Sqlite --> Images[ImageStore]
     Images --> Files[/documents/images/]
-    UI -->|camera or gallery| Picker[image_picker]
-    Picker -->|temporary file| Images
+    Store --> Photos[PhotoPicker]
+    Photos --> Picker[image_picker]
 ```
 
 This separation is what allows the application to be tested at two levels. The widget tests replace the repository with an in-memory implementation and exercise the screens quickly and deterministically, while the integration tests run the same user flows on a device against the real database and file system.
@@ -121,7 +122,7 @@ The table is indexed on `entry_date`, because the list is always presented with 
 
 The `image_name` column holds only the name of the image file, never its full path. On iOS the absolute path to an application's container changes between installations and with some updates, so a stored full path would eventually point to nothing, whereas a file name resolved against the documents directory at the moment it is needed remains valid.
 
-When the user takes a photo or chooses one from the gallery, `image_picker` returns a temporary file that the operating system may remove at any time. `ImageStore` therefore copies it at once into the `images/` folder under a generated name, and the post records that name. When an image is replaced, the previous file is deleted after the new one has been saved, and when a post is deleted, alone or as part of a group, its image file is deleted in the same operation, so the device does not accumulate unused photos. Images are limited to 1600 pixels on the longer edge at a quality of 85, which keeps a typical photo under one megabyte while remaining sharp on a phone screen.
+When the user takes a photo or chooses one from the gallery, `image_picker` returns a temporary file that the operating system may remove at any time. `ImageStore` therefore copies it into the `images/` folder under a generated name the moment the post is saved, before the database row is written, and the post records that name. Holding the temporary path until then means that a draft the user abandons leaves no file behind. When an image is replaced, the previous file is deleted after the new one has been saved, and when a post is deleted, alone or as part of a group, its image file is deleted in the same operation, so the device does not accumulate unused photos. Images are limited to 1600 pixels on the longer edge at a quality of 85, which keeps a typical photo under one megabyte while remaining sharp on a phone screen.
 
 On Android, the system may close the application while the camera is open if the device is short of memory, and in that case the captured photo can only be recovered through `retrieveLostData`. The editor checks for lost data when it opens and restores the image to the draft, and the handling of this case is recorded in `docs/DECISIONS.md`.
 

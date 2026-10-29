@@ -27,14 +27,19 @@ classDiagram
         <<interface>>
         +all() List~Post~
         +find(int id) Post?
-        +save(Post post) Post
+        +save(Post post, String? pickedImagePath) Post
         +deleteMany(Set~int~ ids)
         +search(String text) List~Post~
+        +imageFile(String name) File
     }
 
     class SqlitePostRepository {
         -Database db
         -ImageStore images
+    }
+
+    class PhotoPicker {
+        +pick(bool fromCamera) String?
     }
 
     class BlogDatabase {
@@ -52,6 +57,7 @@ classDiagram
     class PostStore {
         <<ChangeNotifier>>
         -PostRepository repository
+        -PhotoPicker photos
         +List~Post~ posts
         +Set~int~ selected
         +bool selecting
@@ -63,12 +69,15 @@ classDiagram
         +selectAll()
         +clearSelection()
         +search(String text) List~Post~
+        +imageOf(Post post) File?
+        +pickPhoto(bool fromCamera) String?
     }
 
     PostRepository <|.. SqlitePostRepository
     SqlitePostRepository --> BlogDatabase
     SqlitePostRepository --> ImageStore
     PostStore --> PostRepository
+    PostStore --> PhotoPicker
     PostStore ..> Post
     PostRepository ..> Post
 ```
@@ -109,13 +118,13 @@ sequenceDiagram
     User->>Editor: Tap Save
     Editor->>Editor: Validate fields
     Editor->>Store: save(draft, pickedImagePath)
-    Store->>Images: import(pickedImagePath)
-    Images-->>Store: new image name
-    Store->>Repo: save(draft with new image name)
+    Store->>Repo: save(draft, pickedImagePath)
+    Repo->>Images: import(pickedImagePath)
+    Images-->>Repo: new image name
     Repo->>DB: INSERT or UPDATE in transaction
     DB-->>Repo: id
+    Repo->>Images: delete(previous image name)
     Repo-->>Store: saved Post
-    Store->>Images: delete(previous image name)
     Store->>Store: Update list, notify listeners
     Store-->>Editor: saved Post
     Editor-->>User: Return to the previous screen

@@ -3,6 +3,7 @@ import 'package:folio/data/post_repository.dart';
 import 'package:folio/models/post.dart';
 import 'package:folio/state/post_store.dart';
 
+import 'support/fake_photo_picker.dart';
 import 'support/in_memory_post_repository.dart';
 import 'support/repository_contract.dart';
 
@@ -18,7 +19,7 @@ void main() {
 
   setUp(() {
     repository = InMemoryPostRepository();
-    store = PostStore(repository);
+    store = PostStore(repository, FakePhotoPicker());
     notifications = 0;
     store.addListener(() => notifications++);
   });
@@ -45,7 +46,7 @@ void main() {
     });
 
     test('reports a failure', () async {
-      final failing = PostStore(_FailingRepository());
+      final failing = PostStore(_FailingRepository(), FakePhotoPicker());
       await failing.load();
       expect(failing.loadFailed, isTrue);
       expect(failing.loading, isFalse);
