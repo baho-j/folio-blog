@@ -47,5 +47,18 @@ class InMemoryPostRepository implements PostRepository {
   }
 
   @override
+  Future<List<Post>> search(String text) async {
+    final needle = text.trim().toLowerCase();
+    if (needle.isEmpty) return const [];
+    final posts = await all();
+    return posts
+        .where(
+          (post) =>
+              post.title.toLowerCase().contains(needle) || post.body.toLowerCase().contains(needle),
+        )
+        .toList();
+  }
+
+  @override
   File imageFile(String name) => File(name);
 }

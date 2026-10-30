@@ -41,6 +41,7 @@ folio-blog/
 │   │   ├── post_tile.dart
 │   │   ├── post_image.dart
 │   │   ├── image_source_sheet.dart
+│   │   ├── highlighted_text.dart
 │   │   ├── empty_state.dart
 │   │   └── confirm_delete_dialog.dart
 │   ├── theme/

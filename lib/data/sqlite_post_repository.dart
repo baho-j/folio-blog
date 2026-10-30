@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/post.dart';
+import '../util/search_query.dart';
 import 'image_store.dart';
 import 'post_repository.dart';
 
@@ -78,6 +79,19 @@ class SqlitePostRepository implements PostRepository {
     } on FileSystemException {
       return;
     }
+  }
+
+  @override
+  Future<List<Post>> search(String text) async {
+    if (text.trim().isEmpty) return const [];
+    final pattern = likePattern(text);
+    final rows = await _db.query(
+      _table,
+      where: r"title LIKE ? ESCAPE '\' OR body LIKE ? ESCAPE '\'",
+      whereArgs: [pattern, pattern],
+      orderBy: _newestFirst,
+    );
+    return rows.map(Post.fromRow).toList();
   }
 
   @override

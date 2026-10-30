@@ -5,12 +5,21 @@ import 'package:flutter/material.dart';
 import '../models/post.dart';
 import '../theme/app_theme.dart';
 import '../util/date_text.dart';
+import '../util/search_query.dart';
+import 'highlighted_text.dart';
 import 'post_image.dart';
 
 /// Row of the post list, with a square thumbnail, title, date and excerpt.
 class PostTile extends StatelessWidget {
   /// Creates a row for [post].
-  const PostTile({super.key, required this.post, this.image, this.onTap, this.onLongPress});
+  const PostTile({
+    super.key,
+    required this.post,
+    this.image,
+    this.query = '',
+    this.onTap,
+    this.onLongPress,
+  });
 
   /// Side of the square thumbnail.
   static const double thumbnailSize = 64;
@@ -20,6 +29,9 @@ class PostTile extends StatelessWidget {
 
   /// Thumbnail file, or null when the post has no image.
   final File? image;
+
+  /// Search text to mark, empty outside search.
+  final String query;
 
   /// Called when the row is tapped.
   final VoidCallback? onTap;
@@ -48,11 +60,11 @@ class PostTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  HighlightedText(
                     post.title,
+                    query: query,
                     style: theme.textTheme.titleMedium,
                     maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 2),
                   Text(
@@ -60,11 +72,11 @@ class PostTile extends StatelessWidget {
                     style: theme.textTheme.bodySmall?.copyWith(color: muted),
                   ),
                   const SizedBox(height: AppSpacing.small),
-                  Text(
-                    post.excerpt,
+                  HighlightedText(
+                    excerptAround(post.excerpt, query),
+                    query: query,
                     style: theme.textTheme.bodyMedium?.copyWith(color: muted),
                     maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),

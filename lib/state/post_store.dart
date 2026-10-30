@@ -91,6 +91,9 @@ class PostStore extends ChangeNotifier {
     return ids.length;
   }
 
+  /// Returns the posts that match [text].
+  Future<List<Post>> search(String text) => _repository.search(text);
+
   /// Adds or removes the post with [id] from the selection.
   void toggle(int id) {
     if (!_selected.remove(id)) _selected.add(id);

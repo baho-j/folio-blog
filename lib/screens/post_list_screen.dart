@@ -5,6 +5,7 @@ import '../widgets/empty_state.dart';
 import '../widgets/post_tile.dart';
 import 'post_detail_screen.dart';
 import 'post_editor_screen.dart';
+import 'search_screen.dart';
 
 /// Home screen, which lists every post, newest first.
 class PostListScreen extends StatefulWidget {
@@ -42,7 +43,12 @@ class _PostListScreenState extends State<PostListScreen> {
       listenable: _store,
       builder: (context, _) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Folio')),
+          appBar: AppBar(
+            title: const Text('Folio'),
+            actions: [
+              IconButton(tooltip: 'Search', icon: const Icon(Icons.search), onPressed: _search),
+            ],
+          ),
           body: _buildBody(),
           floatingActionButton: _store.posts.isEmpty
               ? null
@@ -99,6 +105,11 @@ class _PostListScreenState extends State<PostListScreen> {
         builder: (_) => PostEditorScreen(store: _store, initialImagePath: recoveredImagePath),
       ),
     );
+  }
+
+  void _search() {
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (_) => SearchScreen(store: _store)));
   }
 
   void _open(int id) {

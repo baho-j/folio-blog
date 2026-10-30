@@ -109,6 +109,54 @@ void repositoryContract(Future<ContractSubject> Function() create) {
     expect((await repository.find(saved.id!))!.imageName, name);
   });
 
+  group('search', () {
+    setUp(() async {
+      await repository.save(contractPost('Lake Kivu', body: 'Morning on the water'));
+      await repository.save(contractPost('Nyungwe', body: 'The canopy walk'));
+      await repository.save(contractPost('Prices', body: 'Up 100% in a_b terms'));
+      await repository.save(contractPost('Slash', body: r'A path like c:\temp'));
+    });
+
+    Future<List<String>> titles(String text) async =>
+        (await repository.search(text)).map((post) => post.title).toList();
+
+    test('finds text in the title', () async {
+      expect(await titles('Kivu'), ['Lake Kivu']);
+    });
+
+    test('finds text in the body', () async {
+      expect(await titles('canopy'), ['Nyungwe']);
+    });
+
+    test('ignores letter case', () async {
+      expect(await titles('MORNING'), ['Lake Kivu']);
+    });
+
+    test('treats the percent sign literally', () async {
+      expect(await titles('100%'), ['Prices']);
+      expect(await titles('%'), ['Prices']);
+    });
+
+    test('treats the underscore literally', () async {
+      expect(await titles('a_b'), ['Prices']);
+      expect(await titles('_'), ['Prices']);
+    });
+
+    test('treats the backslash literally', () async {
+      expect(await titles(r'c:\temp'), ['Slash']);
+    });
+
+    test('returns nothing for unknown or blank text', () async {
+      expect(await titles('volcano'), isEmpty);
+      expect(await titles('   '), isEmpty);
+    });
+
+    test('returns the newest post first', () async {
+      await repository.save(contractPost('Early lake', entryDate: DateTime(2020, 1, 1)));
+      expect(await titles('lake'), ['Lake Kivu', 'Early lake']);
+    });
+  });
+
   Future<Post> savedWithPhoto() async =>
       repository.save(contractPost('With photo'), pickedImagePath: await subject.newPhoto());
 

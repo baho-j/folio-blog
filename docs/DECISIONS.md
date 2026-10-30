@@ -22,7 +22,7 @@ Packages such as `provider`, `riverpod` and `bloc` were considered. The applicat
 
 ### LIKE queries instead of full-text search
 
-SQLite's FTS5 extension provides ranked full-text search, but it is not guaranteed to be compiled into the system SQLite on older Android versions, which would make search fail on some devices. A case-insensitive `LIKE` query over the title and body works on every supported device and is fast enough for the size of a personal blog. The characters `%` and `_` are escaped so that they are matched as typed.
+SQLite's FTS5 extension provides ranked full-text search, but it is not guaranteed to be compiled into the system SQLite on older Android versions, which would make search fail on some devices. A case-insensitive `LIKE` query over the title and body works on every supported device and is fast enough for the size of a personal blog. The characters `%`, `_` and the escape character itself are escaped so that they are matched as typed. SQLite folds case for ASCII letters only, so a search for a word with accented capitals will not match its lower-case form, which suits a personal blog written mainly in English.
 
 ### Image is optional on a post
 

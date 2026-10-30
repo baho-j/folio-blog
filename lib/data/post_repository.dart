@@ -16,6 +16,9 @@ abstract interface class PostRepository {
   /// Deletes the posts with the given [ids].
   Future<void> deleteMany(Set<int> ids);
 
+  /// Matches [text] in the title or body, ignoring case; blank text matches nothing.
+  Future<List<Post>> search(String text);
+
   /// Returns the file for the stored image called [name].
   File imageFile(String name);
 }
