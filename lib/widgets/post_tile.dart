@@ -17,6 +17,7 @@ class PostTile extends StatelessWidget {
     required this.post,
     this.image,
     this.query = '',
+    this.selected = false,
     this.onTap,
     this.onLongPress,
   });
@@ -33,6 +34,9 @@ class PostTile extends StatelessWidget {
   /// Search text to mark, empty outside search.
   final String query;
 
+  /// Whether the post is chosen in selection mode.
+  final bool selected;
+
   /// Called when the row is tapped.
   final VoidCallback? onTap;
 
@@ -43,7 +47,7 @@ class PostTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
-    return InkWell(
+    final row = InkWell(
       onTap: onTap,
       onLongPress: onLongPress,
       child: Padding(
@@ -54,7 +58,7 @@ class PostTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Thumbnail(image: image),
+            _Thumbnail(image: image, selected: selected),
             const SizedBox(width: AppSpacing.medium),
             Expanded(
               child: Column(
@@ -85,13 +89,21 @@ class PostTile extends StatelessWidget {
         ),
       ),
     );
+    return Semantics(
+      selected: selected,
+      child: Material(
+        color: selected ? theme.colorScheme.primaryContainer : Colors.transparent,
+        child: row,
+      ),
+    );
   }
 }
 
 class _Thumbnail extends StatelessWidget {
-  const _Thumbnail({this.image});
+  const _Thumbnail({this.image, required this.selected});
 
   final File? image;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +112,12 @@ class _Thumbnail extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       child: SizedBox.square(
         dimension: PostTile.thumbnailSize,
-        child: image == null
+        child: selected
+            ? ColoredBox(
+                color: scheme.primary,
+                child: Icon(Icons.check, color: scheme.onPrimary),
+              )
+            : image == null
             ? ColoredBox(
                 color: scheme.surfaceContainer,
                 child: Icon(Icons.notes, color: scheme.onSurfaceVariant),
