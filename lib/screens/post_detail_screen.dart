@@ -101,22 +101,27 @@ class _PostBody extends StatelessWidget {
       children: [
         if (image != null)
           PostImage(file: image!, width: double.infinity, fit: BoxFit.fitWidth, label: post.title),
-        Padding(
-          padding: const EdgeInsets.all(AppSpacing.large),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                longDate(post.entryDate),
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: AppSpacing.readingWidth),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.large),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    longDate(post.entryDate),
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.small),
+                  Text(post.title, style: theme.textTheme.headlineMedium),
+                  const SizedBox(height: AppSpacing.large),
+                  SelectableText(post.body, style: theme.textTheme.bodyLarge),
+                ],
               ),
-              const SizedBox(height: AppSpacing.small),
-              Text(post.title, style: theme.textTheme.headlineMedium),
-              const SizedBox(height: AppSpacing.large),
-              SelectableText(post.body, style: theme.textTheme.bodyLarge),
-            ],
+            ),
           ),
         ),
       ],

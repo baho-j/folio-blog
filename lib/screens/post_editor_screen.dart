@@ -153,6 +153,11 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
     return discard ?? false;
   }
 
+  double _sideMargin(BuildContext context) {
+    final spare = MediaQuery.sizeOf(context).width - AppSpacing.readingWidth;
+    return spare > 2 * AppSpacing.medium ? spare / 2 : AppSpacing.medium;
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope<void>(
@@ -171,7 +176,10 @@ class _PostEditorScreenState extends State<PostEditorScreen> {
         body: Form(
           key: _formKey,
           child: ListView(
-            padding: const EdgeInsets.all(AppSpacing.medium),
+            padding: EdgeInsets.symmetric(
+              horizontal: _sideMargin(context),
+              vertical: AppSpacing.medium,
+            ),
             children: [
               _ImageArea(image: _previewImage, onTap: _chooseImage),
               const SizedBox(height: AppSpacing.large),

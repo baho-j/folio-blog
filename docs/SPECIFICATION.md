@@ -87,7 +87,7 @@ Each functional requirement is followed by the check used to accept it.
 
 1. **Work offline.** Every function in section 4 works with the device in airplane mode, and the release build does not request network access.
     - Comes from user requirement 12.
-2. **Run on Android and iOS.** The application is built with Flutter from a single code base and runs on Android 7.0 (API 24) and later and on iOS 13 and later.
+2. **Run on Android and iOS.** The application is built with Flutter from a single code base and runs on Android 7.0 (API 24) and later and on iOS 15 and later.
     - Comes from user requirements 13 and 14.
 3. **Rebuild cleanly.** The project rebuilds without errors on a standard Android Studio installation, using only the dependencies declared in `pubspec.yaml`.
     - Comes from user requirement 13.

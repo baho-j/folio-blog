@@ -61,3 +61,7 @@ The file returned by `image_picker` lives in a temporary or cache folder that th
 ### Orphaned image files
 
 Replacing or deleting images could leave unused files behind if the old file were deleted before the database write succeeded, or never deleted at all. The save and delete operations are ordered so that new files are copied first, database changes run in a transaction, and old files are removed only after the transaction commits, as shown in the sequence diagrams in `docs/DESIGN.md`.
+
+### Minimum iOS version raised to 15
+
+The specification first named iOS 13 as the oldest supported version, but the project created by the current Flutter release sets a deployment target of iOS 15, because the framework no longer supports anything older. The specification was corrected to match, since a stated minimum that the toolchain cannot build for would be a promise the project could not keep.

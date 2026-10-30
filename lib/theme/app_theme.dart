@@ -13,6 +13,9 @@ abstract final class AppSpacing {
 
   /// Generous gap around empty states.
   static const double extraLarge = 40;
+
+  /// Widest a column of text grows on a large screen.
+  static const double readingWidth = 680;
 }
 
 /// Colours, type scale and component styles for the light and dark themes.
