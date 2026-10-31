@@ -18,7 +18,8 @@ folio-blog/
 │   ├── SPECIFICATION.md
 │   ├── DESIGN.md
 │   ├── TESTING.md
-│   └── DECISIONS.md
+│   ├── DECISIONS.md
+│   └── test-output/
 ├── lib/
 │   ├── main.dart
 │   ├── app.dart
@@ -64,6 +65,7 @@ folio-blog/
 | `docs/SPECIFICATION.md` | Software functional specification, with each requirement traced to the user requirements |
 | `docs/DESIGN.md` | Software design document, including the UML class diagram, sequence diagrams, screen flow and database schema |
 | `docs/TESTING.md` | Test plan and recorded results for every implemented function |
+| `docs/test-output/` | Full output of the automated test runs, as the test runner produced it |
 | `docs/DECISIONS.md` | Major development decisions, the alternatives considered, and the issues met during development with their resolutions |
 | `lib/main.dart` | Entry point, which opens the database and starts the application |
 | `lib/app.dart` | Root widget, theme selection and navigation routes |
@@ -173,7 +175,7 @@ The interface uses Material 3 components with a custom theme, so that it looks c
 
 ## 9. Offline operation
 
-The application has no network code, and the main Android manifest does not declare the `INTERNET` permission. Flutter adds that permission only to the debug and profile manifests, for development tooling, so the release build cannot open a network connection at all. All functions were tested with the device in airplane mode on both platforms, and the results are recorded in `docs/TESTING.md`.
+The application has no network code, and the main Android manifest does not declare the `INTERNET` permission. Flutter adds that permission only to the debug and profile manifests, for development tooling, and inspection of the release package confirmed that it does not request it, so the release build cannot open a network connection at all. All functions were tested with an Android phone in airplane mode, and the results are recorded in `docs/TESTING.md`, together with the limits of that testing, since iOS requires macOS and could not be exercised on the Windows machine used for this work.
 
 ## 10. Documentation set
 

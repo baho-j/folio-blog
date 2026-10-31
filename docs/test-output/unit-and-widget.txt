@@ -1,0 +1,155 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  cross_file 0.3.5+5 (0.4.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.4 available)
+Got dependencies!
+9 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading D:/folio-blog/test/accessibility_test.dart
+00:00 +0: D:/folio-blog/test/date_text_test.dart: longDate writes the month in full
+00:00 +1: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:00 +2: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:00 +3: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:00 +4: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:01 +5: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:01 +6: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:02 +7: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:02 +8: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:02 +9: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:02 +10: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:02 +11: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:02 +12: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:02 +13: D:/folio-blog/test/accessibility_test.dart: dark theme the list meets the guidelines
+00:03 +14: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +15: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +16: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +17: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +18: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +19: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +20: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +21: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +22: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +23: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +24: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +25: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +26: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +27: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +28: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +29: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +30: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +31: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +32: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +33: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +34: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +35: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +36: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +37: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:04 +38: D:/folio-blog/test/image_attachment_test.dart: the sheet offers the camera and the gallery
+00:05 +39: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +40: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +41: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +42: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +43: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +44: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +45: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +46: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +47: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +48: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +49: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +50: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +51: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +52: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +53: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +54: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +55: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +56: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +57: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +58: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +59: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +60: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:05 +61: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +62: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +63: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +64: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +65: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +66: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +67: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +68: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +69: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +70: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +71: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +72: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +73: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +74: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +75: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +76: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +77: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +78: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +79: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +80: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +81: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +82: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +83: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +84: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +85: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +86: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:06 +87: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:07 +88: D:/folio-blog/test/post_detail_screen_test.dart: shows the stored title, date and full body
+00:07 +89: D:/folio-blog/test/post_editor_screen_test.dart: new post saving an empty form shows an error on each field
+00:07 +90: D:/folio-blog/test/post_editor_screen_test.dart: new post saving an empty form shows an error on each field
+00:07 +91: D:/folio-blog/test/post_editor_screen_test.dart: new post saving an empty form shows an error on each field
+00:07 +92: D:/folio-blog/test/post_editor_screen_test.dart: new post saving an empty form shows an error on each field
+00:07 +93: D:/folio-blog/test/post_list_screen_test.dart: opens the editor with a photo recovered at start
+00:07 +94: D:/folio-blog/test/post_list_screen_test.dart: opens the editor with a photo recovered at start
+00:08 +95: D:/folio-blog/test/post_list_screen_test.dart: opens the editor with a photo recovered at start
+00:08 +96: D:/folio-blog/test/post_list_screen_test.dart: opens the editor with a photo recovered at start
+00:09 +97: D:/folio-blog/test/post_list_screen_test.dart: opens the editor with a photo recovered at start
+00:09 +98: D:/folio-blog/test/post_list_screen_test.dart: opens the editor with a photo recovered at start
+00:09 +99: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +100: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +101: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +102: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +103: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +104: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +105: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +106: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:09 +107: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:10 +108: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:10 +109: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:10 +110: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:10 +111: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:11 +112: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:11 +113: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:11 +114: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:11 +115: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:11 +116: D:/folio-blog/test/search_screen_test.dart: starts with a prompt
+00:11 +117: D:/folio-blog/test/image_attachment_test.dart: a post that already has a photo removing leaves the post without an image
+00:11 +118: D:/folio-blog/test/image_attachment_test.dart: a post that already has a photo removing leaves the post without an image
+00:12 +119: D:/folio-blog/test/post_editor_screen_test.dart: new post keep editing returns to the form with the text intact
+00:12 +120: D:/folio-blog/test/search_screen_test.dart: waits for a pause in typing before searching
+00:12 +121: D:/folio-blog/test/search_screen_test.dart: waits for a pause in typing before searching
+00:12 +122: D:/folio-blog/test/image_attachment_test.dart: a post that already has a photo removing and then discarding keeps the image
+00:12 +123: D:/folio-blog/test/image_attachment_test.dart: a post that already has a photo removing and then discarding keeps the image
+00:12 +124: D:/folio-blog/test/image_attachment_test.dart: a post that already has a photo removing and then discarding keeps the image
+00:12 +125: D:/folio-blog/test/search_screen_test.dart: lists every match
+00:12 +126: D:/folio-blog/test/selection_mode_test.dart: delete confirms and states the number of posts
+00:13 +127: D:/folio-blog/test/post_editor_screen_test.dart: existing post saved changes appear on the detail screen and in the list
+00:13 +128: D:/folio-blog/test/post_editor_screen_test.dart: existing post saved changes appear on the detail screen and in the list
+00:13 +129: D:/folio-blog/test/selection_mode_test.dart: cancelling the dialog keeps the posts and the selection
+00:13 +130: D:/folio-blog/test/search_screen_test.dart: shows a designed state when nothing matches
+00:13 +131: D:/folio-blog/test/post_editor_screen_test.dart: existing post discarding leaves the stored post unchanged
+00:13 +132: D:/folio-blog/test/selection_mode_test.dart: confirming deletes exactly the selected posts
+00:13 +133: D:/folio-blog/test/search_screen_test.dart: submitting with one match opens that post
+00:13 +134: D:/folio-blog/test/selection_mode_test.dart: deleting every post shows the empty state
+00:14 +135: D:/folio-blog/test/search_screen_test.dart: submitting with several matches stays on the list
+00:14 +136: D:/folio-blog/test/search_screen_test.dart: a result opens its post
+00:14 +137: D:/folio-blog/test/search_screen_test.dart: a post deleted from a result leaves the results
+00:15 +138: D:/folio-blog/test/search_screen_test.dart: clearing the field returns to the prompt
+00:15 +139: All tests passed!

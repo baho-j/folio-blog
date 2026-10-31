@@ -69,3 +69,7 @@ The specification first named iOS 13 as the oldest supported version, but the pr
 ### Kotlin build failure across drives on Windows
 
 The first Android build failed while compiling the Kotlin sources of `image_picker_android`, with the message that incremental caches could not be closed. The project sat on one drive and the Flutter package cache on another, and the incremental compiler could not relate paths across the two. Incremental Kotlin compilation was turned off in `android/gradle.properties`, which costs a few seconds on a full build and lets the project rebuild on any drive of a standard installation.
+
+### Restart test kept the old screen state
+
+The first integration run failed the test that creates a post and looks for it after a restart. The test simulated the restart by pumping a new application widget, but Flutter matched it to the existing one and kept its state, so the new store was never loaded and the list stayed in its loading state. A real restart always builds the application afresh, so the fault lay in the test, which now removes the application and reopens the database before starting it again. All 30 integration tests passed after that change, and no change to the application was needed.

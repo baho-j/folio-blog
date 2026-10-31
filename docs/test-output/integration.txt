@@ -1,0 +1,51 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  cross_file 0.3.5+5 (0.4.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.4 available)
+Got dependencies!
+9 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading D:/folio-blog/integration_test/app_test.dart
+Running Gradle task 'assembleDebug'...                             35.8s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.8s
+00:00 +0: SqlitePostRepository save assigns an id and stores every field
+00:00 +1: SqlitePostRepository save updates an existing post without adding another
+00:00 +2: SqlitePostRepository save keeps the creation time and moves the update time
+00:00 +3: SqlitePostRepository all returns the newest date of entry first
+00:00 +4: SqlitePostRepository all places the later post first on the same date
+00:00 +5: SqlitePostRepository find returns null for an unknown id
+00:00 +6: SqlitePostRepository deleteMany removes exactly the given posts
+00:00 +7: SqlitePostRepository deleteMany accepts an empty set
+00:00 +8: SqlitePostRepository save takes in a picked photo and stores only its file name
+00:00 +9: SqlitePostRepository search finds text in the title
+00:00 +10: SqlitePostRepository search finds text in the body
+00:00 +11: SqlitePostRepository search ignores letter case
+00:00 +12: SqlitePostRepository search treats the percent sign literally
+00:00 +13: SqlitePostRepository search treats the underscore literally
+00:00 +14: SqlitePostRepository search treats the backslash literally
+00:00 +15: SqlitePostRepository search returns nothing for unknown or blank text
+00:00 +16: SqlitePostRepository search returns the newest post first
+00:00 +17: SqlitePostRepository replacing an image deletes the previous file
+00:00 +18: SqlitePostRepository removing an image deletes its file
+00:00 +19: SqlitePostRepository editing the text keeps the image file
+00:00 +20: SqlitePostRepository deleting a post deletes its image file
+00:01 +21: SqlitePostRepository deleting a group deletes only the images of that group
+00:01 +22: SqlitePostRepository a failed save leaves no image file behind
+00:01 +23: SqlitePostRepository posts survive closing and reopening the database
+00:01 +24: SqlitePostRepository 500 posts list and search within 300 milliseconds
+list 18ms, search 1ms
+00:02 +25: create a post and find it after a restart
+00:06 +26: edit a post
+00:09 +27: delete a post with its image
+00:12 +28: delete a chosen group of posts
+00:16 +29: search with a wildcard character and open the only match
+00:17 +30: (tearDownAll)
+00:17 +30: All tests passed!

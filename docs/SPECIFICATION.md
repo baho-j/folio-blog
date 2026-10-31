@@ -61,8 +61,8 @@ Each functional requirement is followed by the check used to accept it.
 7. **Delete a group of posts.** The user can enter selection mode from the list, select any number of posts, select all posts, and delete the selected posts in one action after confirming.
     - Check: A long press on a post starts selection mode with that post selected. The app bar shows the number selected. Confirming deletes exactly the selected posts.
     - Comes from user requirement 8.
-8. **Search.** The user can search the title and body of all posts. When one post matches, the application opens it. When several match, the application lists them with the matching text highlighted. When none match, the application says so.
-    - Check: Searching for text found only in one post opens that post. Text found in several posts lists them all. Search ignores letter case, and the characters `%` and `_` are matched literally.
+8. **Search.** The user can search the title and body of all posts. Matches are listed as the user types, with the matching text highlighted. When the user submits a search that one post matches, the application opens that post. When none match, the application says so.
+    - Check: Submitting a search for text found only in one post opens that post. Text found in several posts lists them all. Search ignores letter case, and the characters `%` and `_` are matched literally.
     - Comes from user requirement 6.
 9. **Attach from the gallery.** The user can attach an image to a post from the photo gallery.
     - Check: An image chosen from the gallery or taken with the camera appears in the editor preview and is shown on the saved post.
