@@ -73,10 +73,10 @@ folio-blog/
 | `lib/data/` | All access to SQLite, the file system and the camera and gallery, behind the `PostRepository` interface and the `PhotoPicker` class |
 | `lib/state/` | `PostStore`, which holds the list of posts, the current selection and the search results, and notifies the screens when they change |
 | `lib/screens/` | The four screens of the application |
-| `lib/widgets/` | Reusable interface components shared between screens |
+| `lib/widgets/` | Reusable interface components shared between screens, including the post tile, image display, highlighted search text and the delete confirmation |
 | `lib/theme/` | Colours, type scale and component styles for the light and dark themes |
 | `lib/util/` | Date formatting and search query handling, written in plain Dart |
-| `test/` | Unit and widget tests, run with `flutter test` |
+| `test/` | Unit and widget tests, run with `flutter test`, with the in-memory repository and the repository contract in `test/support/` |
 | `integration_test/` | End-to-end tests that run on a device against the real database |
 | `android/`, `ios/` | Platform projects, including permissions and the camera and photo library usage descriptions |
 

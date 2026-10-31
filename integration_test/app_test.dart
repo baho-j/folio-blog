@@ -9,8 +9,11 @@ import 'package:folio/data/post_repository.dart';
 import 'package:folio/data/sqlite_post_repository.dart';
 import 'package:folio/state/post_store.dart';
 import 'package:integration_test/integration_test.dart';
+// Third-party: path (BSD-3-Clause), joins file paths the same way on both platforms
 import 'package:path/path.dart' as p;
+// Third-party: path_provider (BSD-3-Clause), locates the documents directory on each platform
 import 'package:path_provider/path_provider.dart';
+// Third-party: sqflite (BSD-2-Clause), the standard SQLite plugin for Flutter
 import 'package:sqflite/sqflite.dart';
 
 import '../test/support/fake_photo_picker.dart';

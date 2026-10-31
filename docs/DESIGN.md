@@ -45,11 +45,12 @@ classDiagram
 
     class BlogDatabase {
         +open() Database
-        -onCreate(Database db, int version)
+        +onCreate(Database db, int version)
     }
 
     class ImageStore {
-        -Directory folder
+        +Directory folder
+        +open() ImageStore
         +import(String sourcePath) String
         +fileFor(String name) File
         +delete(String name)
@@ -62,6 +63,9 @@ classDiagram
         +List~Post~ posts
         +Set~int~ selected
         +bool selecting
+        +bool loading
+        +bool loadFailed
+        +post(int id) Post?
         +load()
         +save(Post post, String? pickedImagePath)
         +delete(int id)

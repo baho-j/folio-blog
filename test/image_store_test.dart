@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:folio/data/image_store.dart';
+// Third-party: path (BSD-3-Clause), joins file paths the same way on both platforms
 import 'package:path/path.dart' as p;
 
 void main() {
