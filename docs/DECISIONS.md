@@ -65,3 +65,7 @@ Replacing or deleting images could leave unused files behind if the old file wer
 ### Minimum iOS version raised to 15
 
 The specification first named iOS 13 as the oldest supported version, but the project created by the current Flutter release sets a deployment target of iOS 15, because the framework no longer supports anything older. The specification was corrected to match, since a stated minimum that the toolchain cannot build for would be a promise the project could not keep.
+
+### Kotlin build failure across drives on Windows
+
+The first Android build failed while compiling the Kotlin sources of `image_picker_android`, with the message that incremental caches could not be closed. The project sat on one drive and the Flutter package cache on another, and the incremental compiler could not relate paths across the two. Incremental Kotlin compilation was turned off in `android/gradle.properties`, which costs a few seconds on a full build and lets the project rebuild on any drive of a standard installation.
